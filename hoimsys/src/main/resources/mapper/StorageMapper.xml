@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hoimsys.dao.StorageMapper">
+  <resultMap id="BaseResultMap" type="hoimsys.po.Storage">
+    <id column="s_id" jdbcType="INTEGER" property="sId" />
+    <result column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="s_in_price" jdbcType="DECIMAL" property="sInPrice" />
+    <result column="s_number" jdbcType="INTEGER" property="sNumber" />
+    <result column="s_location" jdbcType="VARCHAR" property="sLocation" />
+    <result column="s_in_time" jdbcType="DATE" property="sInTime" />
+    <result column="s_last_days" jdbcType="INTEGER" property="sLastDays" />
+    <result column="d_id" jdbcType="INTEGER" property="dId" />
+    <result column="s_out_price" jdbcType="DECIMAL" property="sOutPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    s_id, m_id, s_in_price, s_number, s_location, s_in_time, s_last_days, d_id, s_out_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from storage
+    where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from storage
+    where s_id = #{sId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="hoimsys.po.Storage">
+    insert into storage (s_id, m_id, s_in_price, 
+      s_number, s_location, s_in_time, 
+      s_last_days, d_id, s_out_price
+      )
+    values (#{sId,jdbcType=INTEGER}, #{mId,jdbcType=INTEGER}, #{sInPrice,jdbcType=DECIMAL}, 
+      #{sNumber,jdbcType=INTEGER}, #{sLocation,jdbcType=VARCHAR}, #{sInTime,jdbcType=DATE}, 
+      #{sLastDays,jdbcType=INTEGER}, #{dId,jdbcType=INTEGER}, #{sOutPrice,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="hoimsys.po.Storage">
+    insert into storage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sId != null">
+        s_id,
+      </if>
+      <if test="mId != null">
+        m_id,
+      </if>
+      <if test="sInPrice != null">
+        s_in_price,
+      </if>
+      <if test="sNumber != null">
+        s_number,
+      </if>
+      <if test="sLocation != null">
+        s_location,
+      </if>
+      <if test="sInTime != null">
+        s_in_time,
+      </if>
+      <if test="sLastDays != null">
+        s_last_days,
+      </if>
+      <if test="dId != null">
+        d_id,
+      </if>
+      <if test="sOutPrice != null">
+        s_out_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sId != null">
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null">
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="sInPrice != null">
+        #{sInPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sNumber != null">
+        #{sNumber,jdbcType=INTEGER},
+      </if>
+      <if test="sLocation != null">
+        #{sLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="sInTime != null">
+        #{sInTime,jdbcType=DATE},
+      </if>
+      <if test="sLastDays != null">
+        #{sLastDays,jdbcType=INTEGER},
+      </if>
+      <if test="dId != null">
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="sOutPrice != null">
+        #{sOutPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hoimsys.po.Storage">
+    update storage
+    <set>
+      <if test="mId != null">
+        m_id = #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="sInPrice != null">
+        s_in_price = #{sInPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sNumber != null">
+        s_number = #{sNumber,jdbcType=INTEGER},
+      </if>
+      <if test="sLocation != null">
+        s_location = #{sLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="sInTime != null">
+        s_in_time = #{sInTime,jdbcType=DATE},
+      </if>
+      <if test="sLastDays != null">
+        s_last_days = #{sLastDays,jdbcType=INTEGER},
+      </if>
+      <if test="dId != null">
+        d_id = #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="sOutPrice != null">
+        s_out_price = #{sOutPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hoimsys.po.Storage">
+    update storage
+    set m_id = #{mId,jdbcType=INTEGER},
+      s_in_price = #{sInPrice,jdbcType=DECIMAL},
+      s_number = #{sNumber,jdbcType=INTEGER},
+      s_location = #{sLocation,jdbcType=VARCHAR},
+      s_in_time = #{sInTime,jdbcType=DATE},
+      s_last_days = #{sLastDays,jdbcType=INTEGER},
+      d_id = #{dId,jdbcType=INTEGER},
+      s_out_price = #{sOutPrice,jdbcType=DECIMAL}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+</mapper>

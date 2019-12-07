@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hoimsys.dao.DepartmentMapper">
+  <resultMap id="BaseResultMap" type="hoimsys.po.Department">
+    <id column="dt_id" jdbcType="INTEGER" property="dtId" />
+    <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
+    <result column="dt_mobile" jdbcType="VARCHAR" property="dtMobile" />
+    <result column="dt_room_number" jdbcType="VARCHAR" property="dtRoomNumber" />
+    <result column="dt_info" jdbcType="VARCHAR" property="dtInfo" />
+    <result column="dt_img" jdbcType="VARCHAR" property="dtImg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dt_id, dt_name, dt_mobile, dt_room_number, dt_info, dt_img
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from department
+    where dt_id = #{dtId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from department
+    where dt_id = #{dtId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="hoimsys.po.Department">
+    insert into department (dt_id, dt_name, dt_mobile, 
+      dt_room_number, dt_info, dt_img
+      )
+    values (#{dtId,jdbcType=INTEGER}, #{dtName,jdbcType=VARCHAR}, #{dtMobile,jdbcType=VARCHAR}, 
+      #{dtRoomNumber,jdbcType=VARCHAR}, #{dtInfo,jdbcType=VARCHAR}, #{dtImg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="hoimsys.po.Department">
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dtId != null">
+        dt_id,
+      </if>
+      <if test="dtName != null">
+        dt_name,
+      </if>
+      <if test="dtMobile != null">
+        dt_mobile,
+      </if>
+      <if test="dtRoomNumber != null">
+        dt_room_number,
+      </if>
+      <if test="dtInfo != null">
+        dt_info,
+      </if>
+      <if test="dtImg != null">
+        dt_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dtId != null">
+        #{dtId,jdbcType=INTEGER},
+      </if>
+      <if test="dtName != null">
+        #{dtName,jdbcType=VARCHAR},
+      </if>
+      <if test="dtMobile != null">
+        #{dtMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="dtRoomNumber != null">
+        #{dtRoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dtInfo != null">
+        #{dtInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="dtImg != null">
+        #{dtImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hoimsys.po.Department">
+    update department
+    <set>
+      <if test="dtName != null">
+        dt_name = #{dtName,jdbcType=VARCHAR},
+      </if>
+      <if test="dtMobile != null">
+        dt_mobile = #{dtMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="dtRoomNumber != null">
+        dt_room_number = #{dtRoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dtInfo != null">
+        dt_info = #{dtInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="dtImg != null">
+        dt_img = #{dtImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dt_id = #{dtId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hoimsys.po.Department">
+    update department
+    set dt_name = #{dtName,jdbcType=VARCHAR},
+      dt_mobile = #{dtMobile,jdbcType=VARCHAR},
+      dt_room_number = #{dtRoomNumber,jdbcType=VARCHAR},
+      dt_info = #{dtInfo,jdbcType=VARCHAR},
+      dt_img = #{dtImg,jdbcType=VARCHAR}
+    where dt_id = #{dtId,jdbcType=INTEGER}
+  </update>
+</mapper>

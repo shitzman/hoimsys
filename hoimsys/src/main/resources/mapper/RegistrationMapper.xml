@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hoimsys.dao.RegistrationMapper">
+  <resultMap id="BaseResultMap" type="hoimsys.po.Registration">
+    <id column="r_id" jdbcType="INTEGER" property="rId" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="dt_id" jdbcType="INTEGER" property="dtId" />
+    <result column="d_id" jdbcType="INTEGER" property="dId" />
+    <result column="r_date" jdbcType="DATE" property="rDate" />
+    <result column="r_fee" jdbcType="DECIMAL" property="rFee" />
+    <result column="ps_id" jdbcType="INTEGER" property="psId" />
+    <result column="r_info" jdbcType="VARCHAR" property="rInfo" />
+    <result column="r_remark" jdbcType="VARCHAR" property="rRemark" />
+    <result column="r_pay_number" jdbcType="VARCHAR" property="rPayNumber" />
+    <result column="r_status" jdbcType="INTEGER" property="rStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    r_id, p_id, dt_id, d_id, r_date, r_fee, ps_id, r_info, r_remark, r_pay_number, r_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from registration
+    where r_id = #{rId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from registration
+    where r_id = #{rId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="hoimsys.po.Registration">
+    insert into registration (r_id, p_id, dt_id, 
+      d_id, r_date, r_fee, ps_id, 
+      r_info, r_remark, r_pay_number, 
+      r_status)
+    values (#{rId,jdbcType=INTEGER}, #{pId,jdbcType=INTEGER}, #{dtId,jdbcType=INTEGER}, 
+      #{dId,jdbcType=INTEGER}, #{rDate,jdbcType=DATE}, #{rFee,jdbcType=DECIMAL}, #{psId,jdbcType=INTEGER}, 
+      #{rInfo,jdbcType=VARCHAR}, #{rRemark,jdbcType=VARCHAR}, #{rPayNumber,jdbcType=VARCHAR}, 
+      #{rStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="hoimsys.po.Registration">
+    insert into registration
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="dtId != null">
+        dt_id,
+      </if>
+      <if test="dId != null">
+        d_id,
+      </if>
+      <if test="rDate != null">
+        r_date,
+      </if>
+      <if test="rFee != null">
+        r_fee,
+      </if>
+      <if test="psId != null">
+        ps_id,
+      </if>
+      <if test="rInfo != null">
+        r_info,
+      </if>
+      <if test="rRemark != null">
+        r_remark,
+      </if>
+      <if test="rPayNumber != null">
+        r_pay_number,
+      </if>
+      <if test="rStatus != null">
+        r_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        #{rId,jdbcType=INTEGER},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="dtId != null">
+        #{dtId,jdbcType=INTEGER},
+      </if>
+      <if test="dId != null">
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="rDate != null">
+        #{rDate,jdbcType=DATE},
+      </if>
+      <if test="rFee != null">
+        #{rFee,jdbcType=DECIMAL},
+      </if>
+      <if test="psId != null">
+        #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="rInfo != null">
+        #{rInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="rRemark != null">
+        #{rRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="rPayNumber != null">
+        #{rPayNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rStatus != null">
+        #{rStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hoimsys.po.Registration">
+    update registration
+    <set>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="dtId != null">
+        dt_id = #{dtId,jdbcType=INTEGER},
+      </if>
+      <if test="dId != null">
+        d_id = #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="rDate != null">
+        r_date = #{rDate,jdbcType=DATE},
+      </if>
+      <if test="rFee != null">
+        r_fee = #{rFee,jdbcType=DECIMAL},
+      </if>
+      <if test="psId != null">
+        ps_id = #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="rInfo != null">
+        r_info = #{rInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="rRemark != null">
+        r_remark = #{rRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="rPayNumber != null">
+        r_pay_number = #{rPayNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rStatus != null">
+        r_status = #{rStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hoimsys.po.Registration">
+    update registration
+    set p_id = #{pId,jdbcType=INTEGER},
+      dt_id = #{dtId,jdbcType=INTEGER},
+      d_id = #{dId,jdbcType=INTEGER},
+      r_date = #{rDate,jdbcType=DATE},
+      r_fee = #{rFee,jdbcType=DECIMAL},
+      ps_id = #{psId,jdbcType=INTEGER},
+      r_info = #{rInfo,jdbcType=VARCHAR},
+      r_remark = #{rRemark,jdbcType=VARCHAR},
+      r_pay_number = #{rPayNumber,jdbcType=VARCHAR},
+      r_status = #{rStatus,jdbcType=INTEGER}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+</mapper>

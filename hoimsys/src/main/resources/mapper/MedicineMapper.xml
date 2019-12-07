@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hoimsys.dao.MedicineMapper">
+  <resultMap id="BaseResultMap" type="hoimsys.po.Medicine">
+    <id column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="m_name" jdbcType="VARCHAR" property="mName" />
+    <result column="m_brand" jdbcType="VARCHAR" property="mBrand" />
+    <result column="m_specifications" jdbcType="VARCHAR" property="mSpecifications" />
+    <result column="m_type" jdbcType="VARCHAR" property="mType" />
+    <result column="m_price" jdbcType="DECIMAL" property="mPrice" />
+    <result column="m_remark" jdbcType="VARCHAR" property="mRemark" />
+    <result column="m_img" jdbcType="VARCHAR" property="mImg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_id, m_name, m_brand, m_specifications, m_type, m_price, m_remark, m_img
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medicine
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="hoimsys.po.Medicine">
+    insert into medicine (m_id, m_name, m_brand, 
+      m_specifications, m_type, m_price, 
+      m_remark, m_img)
+    values (#{mId,jdbcType=INTEGER}, #{mName,jdbcType=VARCHAR}, #{mBrand,jdbcType=VARCHAR}, 
+      #{mSpecifications,jdbcType=VARCHAR}, #{mType,jdbcType=VARCHAR}, #{mPrice,jdbcType=DECIMAL}, 
+      #{mRemark,jdbcType=VARCHAR}, #{mImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="hoimsys.po.Medicine">
+    insert into medicine
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        m_id,
+      </if>
+      <if test="mName != null">
+        m_name,
+      </if>
+      <if test="mBrand != null">
+        m_brand,
+      </if>
+      <if test="mSpecifications != null">
+        m_specifications,
+      </if>
+      <if test="mType != null">
+        m_type,
+      </if>
+      <if test="mPrice != null">
+        m_price,
+      </if>
+      <if test="mRemark != null">
+        m_remark,
+      </if>
+      <if test="mImg != null">
+        m_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="mName != null">
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mBrand != null">
+        #{mBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="mSpecifications != null">
+        #{mSpecifications,jdbcType=VARCHAR},
+      </if>
+      <if test="mType != null">
+        #{mType,jdbcType=VARCHAR},
+      </if>
+      <if test="mPrice != null">
+        #{mPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="mRemark != null">
+        #{mRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mImg != null">
+        #{mImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hoimsys.po.Medicine">
+    update medicine
+    <set>
+      <if test="mName != null">
+        m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mBrand != null">
+        m_brand = #{mBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="mSpecifications != null">
+        m_specifications = #{mSpecifications,jdbcType=VARCHAR},
+      </if>
+      <if test="mType != null">
+        m_type = #{mType,jdbcType=VARCHAR},
+      </if>
+      <if test="mPrice != null">
+        m_price = #{mPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="mRemark != null">
+        m_remark = #{mRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mImg != null">
+        m_img = #{mImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hoimsys.po.Medicine">
+    update medicine
+    set m_name = #{mName,jdbcType=VARCHAR},
+      m_brand = #{mBrand,jdbcType=VARCHAR},
+      m_specifications = #{mSpecifications,jdbcType=VARCHAR},
+      m_type = #{mType,jdbcType=VARCHAR},
+      m_price = #{mPrice,jdbcType=DECIMAL},
+      m_remark = #{mRemark,jdbcType=VARCHAR},
+      m_img = #{mImg,jdbcType=VARCHAR}
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+</mapper>

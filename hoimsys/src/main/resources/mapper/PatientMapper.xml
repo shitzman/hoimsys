@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hoimsys.dao.PatientMapper">
+  <resultMap id="BaseResultMap" type="hoimsys.po.Patient">
+    <id column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="p_mobile" jdbcType="VARCHAR" property="pMobile" />
+    <result column="p_password" jdbcType="VARCHAR" property="pPassword" />
+    <result column="p_name" jdbcType="VARCHAR" property="pName" />
+    <result column="p_sex" jdbcType="VARCHAR" property="pSex" />
+    <result column="p_birthday" jdbcType="DATE" property="pBirthday" />
+    <result column="p_id_card" jdbcType="VARCHAR" property="pIdCard" />
+    <result column="p_address" jdbcType="VARCHAR" property="pAddress" />
+    <result column="p_status" jdbcType="INTEGER" property="pStatus" />
+    <result column="p_img" jdbcType="VARCHAR" property="pImg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    p_id, p_mobile, p_password, p_name, p_sex, p_birthday, p_id_card, p_address, p_status, 
+    p_img
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient
+    where p_id = #{pId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from patient
+    where p_id = #{pId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="hoimsys.po.Patient">
+    insert into patient (p_id, p_mobile, p_password, 
+      p_name, p_sex, p_birthday, 
+      p_id_card, p_address, p_status, 
+      p_img)
+    values (#{pId,jdbcType=INTEGER}, #{pMobile,jdbcType=VARCHAR}, #{pPassword,jdbcType=VARCHAR}, 
+      #{pName,jdbcType=VARCHAR}, #{pSex,jdbcType=VARCHAR}, #{pBirthday,jdbcType=DATE}, 
+      #{pIdCard,jdbcType=VARCHAR}, #{pAddress,jdbcType=VARCHAR}, #{pStatus,jdbcType=INTEGER}, 
+      #{pImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="hoimsys.po.Patient">
+    insert into patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="pMobile != null">
+        p_mobile,
+      </if>
+      <if test="pPassword != null">
+        p_password,
+      </if>
+      <if test="pName != null">
+        p_name,
+      </if>
+      <if test="pSex != null">
+        p_sex,
+      </if>
+      <if test="pBirthday != null">
+        p_birthday,
+      </if>
+      <if test="pIdCard != null">
+        p_id_card,
+      </if>
+      <if test="pAddress != null">
+        p_address,
+      </if>
+      <if test="pStatus != null">
+        p_status,
+      </if>
+      <if test="pImg != null">
+        p_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="pMobile != null">
+        #{pMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="pPassword != null">
+        #{pPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="pName != null">
+        #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pSex != null">
+        #{pSex,jdbcType=VARCHAR},
+      </if>
+      <if test="pBirthday != null">
+        #{pBirthday,jdbcType=DATE},
+      </if>
+      <if test="pIdCard != null">
+        #{pIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="pAddress != null">
+        #{pAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pStatus != null">
+        #{pStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pImg != null">
+        #{pImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hoimsys.po.Patient">
+    update patient
+    <set>
+      <if test="pMobile != null">
+        p_mobile = #{pMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="pPassword != null">
+        p_password = #{pPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="pName != null">
+        p_name = #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pSex != null">
+        p_sex = #{pSex,jdbcType=VARCHAR},
+      </if>
+      <if test="pBirthday != null">
+        p_birthday = #{pBirthday,jdbcType=DATE},
+      </if>
+      <if test="pIdCard != null">
+        p_id_card = #{pIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="pAddress != null">
+        p_address = #{pAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pStatus != null">
+        p_status = #{pStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pImg != null">
+        p_img = #{pImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hoimsys.po.Patient">
+    update patient
+    set p_mobile = #{pMobile,jdbcType=VARCHAR},
+      p_password = #{pPassword,jdbcType=VARCHAR},
+      p_name = #{pName,jdbcType=VARCHAR},
+      p_sex = #{pSex,jdbcType=VARCHAR},
+      p_birthday = #{pBirthday,jdbcType=DATE},
+      p_id_card = #{pIdCard,jdbcType=VARCHAR},
+      p_address = #{pAddress,jdbcType=VARCHAR},
+      p_status = #{pStatus,jdbcType=INTEGER},
+      p_img = #{pImg,jdbcType=VARCHAR}
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+</mapper>

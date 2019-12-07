@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hoimsys.dao.PrescriptionMapper">
+  <resultMap id="BaseResultMap" type="hoimsys.po.Prescription">
+    <id column="ps_id" jdbcType="INTEGER" property="psId" />
+    <result column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="ps_price" jdbcType="DECIMAL" property="psPrice" />
+    <result column="ps_number" jdbcType="INTEGER" property="psNumber" />
+    <result column="ps_pay_number" jdbcType="VARCHAR" property="psPayNumber" />
+    <result column="ps_remark" jdbcType="VARCHAR" property="psRemark" />
+    <result column="ps_status" jdbcType="VARCHAR" property="psStatus" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ps_id, m_id, ps_price, ps_number, ps_pay_number, ps_remark, ps_status, p_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from prescription
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from prescription
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="hoimsys.po.Prescription">
+    insert into prescription (ps_id, m_id, ps_price, 
+      ps_number, ps_pay_number, ps_remark, 
+      ps_status, p_id)
+    values (#{psId,jdbcType=INTEGER}, #{mId,jdbcType=INTEGER}, #{psPrice,jdbcType=DECIMAL}, 
+      #{psNumber,jdbcType=INTEGER}, #{psPayNumber,jdbcType=VARCHAR}, #{psRemark,jdbcType=VARCHAR}, 
+      #{psStatus,jdbcType=VARCHAR}, #{pId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="hoimsys.po.Prescription">
+    insert into prescription
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="psId != null">
+        ps_id,
+      </if>
+      <if test="mId != null">
+        m_id,
+      </if>
+      <if test="psPrice != null">
+        ps_price,
+      </if>
+      <if test="psNumber != null">
+        ps_number,
+      </if>
+      <if test="psPayNumber != null">
+        ps_pay_number,
+      </if>
+      <if test="psRemark != null">
+        ps_remark,
+      </if>
+      <if test="psStatus != null">
+        ps_status,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="psId != null">
+        #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null">
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="psPrice != null">
+        #{psPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="psNumber != null">
+        #{psNumber,jdbcType=INTEGER},
+      </if>
+      <if test="psPayNumber != null">
+        #{psPayNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="psRemark != null">
+        #{psRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="psStatus != null">
+        #{psStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hoimsys.po.Prescription">
+    update prescription
+    <set>
+      <if test="mId != null">
+        m_id = #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="psPrice != null">
+        ps_price = #{psPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="psNumber != null">
+        ps_number = #{psNumber,jdbcType=INTEGER},
+      </if>
+      <if test="psPayNumber != null">
+        ps_pay_number = #{psPayNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="psRemark != null">
+        ps_remark = #{psRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="psStatus != null">
+        ps_status = #{psStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hoimsys.po.Prescription">
+    update prescription
+    set m_id = #{mId,jdbcType=INTEGER},
+      ps_price = #{psPrice,jdbcType=DECIMAL},
+      ps_number = #{psNumber,jdbcType=INTEGER},
+      ps_pay_number = #{psPayNumber,jdbcType=VARCHAR},
+      ps_remark = #{psRemark,jdbcType=VARCHAR},
+      ps_status = #{psStatus,jdbcType=VARCHAR},
+      p_id = #{pId,jdbcType=INTEGER}
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </update>
+</mapper>

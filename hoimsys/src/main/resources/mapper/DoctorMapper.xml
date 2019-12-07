@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hoimsys.dao.DoctorMapper">
+  <resultMap id="BaseResultMap" type="hoimsys.po.Doctor">
+    <id column="d_id" jdbcType="INTEGER" property="dId" />
+    <result column="dt_id" jdbcType="INTEGER" property="dtId" />
+    <result column="t_id" jdbcType="INTEGER" property="tId" />
+    <result column="d_name" jdbcType="VARCHAR" property="dName" />
+    <result column="d_sex" jdbcType="VARCHAR" property="dSex" />
+    <result column="d_mobile" jdbcType="VARCHAR" property="dMobile" />
+    <result column="d_password" jdbcType="VARCHAR" property="dPassword" />
+    <result column="d_limits_number" jdbcType="INTEGER" property="dLimitsNumber" />
+    <result column="d_img" jdbcType="VARCHAR" property="dImg" />
+    <result column="d_info" jdbcType="VARCHAR" property="dInfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    d_id, dt_id, t_id, d_name, d_sex, d_mobile, d_password, d_limits_number, d_img, d_info
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where d_id = #{dId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from doctor
+    where d_id = #{dId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="hoimsys.po.Doctor">
+    insert into doctor (d_id, dt_id, t_id, 
+      d_name, d_sex, d_mobile, 
+      d_password, d_limits_number, d_img, 
+      d_info)
+    values (#{dId,jdbcType=INTEGER}, #{dtId,jdbcType=INTEGER}, #{tId,jdbcType=INTEGER}, 
+      #{dName,jdbcType=VARCHAR}, #{dSex,jdbcType=VARCHAR}, #{dMobile,jdbcType=VARCHAR}, 
+      #{dPassword,jdbcType=VARCHAR}, #{dLimitsNumber,jdbcType=INTEGER}, #{dImg,jdbcType=VARCHAR}, 
+      #{dInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="hoimsys.po.Doctor">
+    insert into doctor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dId != null">
+        d_id,
+      </if>
+      <if test="dtId != null">
+        dt_id,
+      </if>
+      <if test="tId != null">
+        t_id,
+      </if>
+      <if test="dName != null">
+        d_name,
+      </if>
+      <if test="dSex != null">
+        d_sex,
+      </if>
+      <if test="dMobile != null">
+        d_mobile,
+      </if>
+      <if test="dPassword != null">
+        d_password,
+      </if>
+      <if test="dLimitsNumber != null">
+        d_limits_number,
+      </if>
+      <if test="dImg != null">
+        d_img,
+      </if>
+      <if test="dInfo != null">
+        d_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dId != null">
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="dtId != null">
+        #{dtId,jdbcType=INTEGER},
+      </if>
+      <if test="tId != null">
+        #{tId,jdbcType=INTEGER},
+      </if>
+      <if test="dName != null">
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dSex != null">
+        #{dSex,jdbcType=VARCHAR},
+      </if>
+      <if test="dMobile != null">
+        #{dMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="dPassword != null">
+        #{dPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="dLimitsNumber != null">
+        #{dLimitsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="dImg != null">
+        #{dImg,jdbcType=VARCHAR},
+      </if>
+      <if test="dInfo != null">
+        #{dInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hoimsys.po.Doctor">
+    update doctor
+    <set>
+      <if test="dtId != null">
+        dt_id = #{dtId,jdbcType=INTEGER},
+      </if>
+      <if test="tId != null">
+        t_id = #{tId,jdbcType=INTEGER},
+      </if>
+      <if test="dName != null">
+        d_name = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dSex != null">
+        d_sex = #{dSex,jdbcType=VARCHAR},
+      </if>
+      <if test="dMobile != null">
+        d_mobile = #{dMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="dPassword != null">
+        d_password = #{dPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="dLimitsNumber != null">
+        d_limits_number = #{dLimitsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="dImg != null">
+        d_img = #{dImg,jdbcType=VARCHAR},
+      </if>
+      <if test="dInfo != null">
+        d_info = #{dInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hoimsys.po.Doctor">
+    update doctor
+    set dt_id = #{dtId,jdbcType=INTEGER},
+      t_id = #{tId,jdbcType=INTEGER},
+      d_name = #{dName,jdbcType=VARCHAR},
+      d_sex = #{dSex,jdbcType=VARCHAR},
+      d_mobile = #{dMobile,jdbcType=VARCHAR},
+      d_password = #{dPassword,jdbcType=VARCHAR},
+      d_limits_number = #{dLimitsNumber,jdbcType=INTEGER},
+      d_img = #{dImg,jdbcType=VARCHAR},
+      d_info = #{dInfo,jdbcType=VARCHAR}
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+</mapper>

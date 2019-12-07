@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hoimsys.dao.TitleMapper">
+  <resultMap id="BaseResultMap" type="hoimsys.po.Title">
+    <id column="t_id" jdbcType="INTEGER" property="tId" />
+    <result column="t_name" jdbcType="VARCHAR" property="tName" />
+    <result column="t_fee" jdbcType="DECIMAL" property="tFee" />
+    <result column="t_remark" jdbcType="VARCHAR" property="tRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    t_id, t_name, t_fee, t_remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from title
+    where t_id = #{tId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from title
+    where t_id = #{tId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="hoimsys.po.Title">
+    insert into title (t_id, t_name, t_fee, 
+      t_remark)
+    values (#{tId,jdbcType=INTEGER}, #{tName,jdbcType=VARCHAR}, #{tFee,jdbcType=DECIMAL}, 
+      #{tRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="hoimsys.po.Title">
+    insert into title
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tId != null">
+        t_id,
+      </if>
+      <if test="tName != null">
+        t_name,
+      </if>
+      <if test="tFee != null">
+        t_fee,
+      </if>
+      <if test="tRemark != null">
+        t_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tId != null">
+        #{tId,jdbcType=INTEGER},
+      </if>
+      <if test="tName != null">
+        #{tName,jdbcType=VARCHAR},
+      </if>
+      <if test="tFee != null">
+        #{tFee,jdbcType=DECIMAL},
+      </if>
+      <if test="tRemark != null">
+        #{tRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hoimsys.po.Title">
+    update title
+    <set>
+      <if test="tName != null">
+        t_name = #{tName,jdbcType=VARCHAR},
+      </if>
+      <if test="tFee != null">
+        t_fee = #{tFee,jdbcType=DECIMAL},
+      </if>
+      <if test="tRemark != null">
+        t_remark = #{tRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where t_id = #{tId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hoimsys.po.Title">
+    update title
+    set t_name = #{tName,jdbcType=VARCHAR},
+      t_fee = #{tFee,jdbcType=DECIMAL},
+      t_remark = #{tRemark,jdbcType=VARCHAR}
+    where t_id = #{tId,jdbcType=INTEGER}
+  </update>
+</mapper>
