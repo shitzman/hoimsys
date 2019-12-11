@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +20,11 @@ import hoimsys.bo.Msg;
 
 @Controller
 @RequestMapping("api/tools")
+@CrossOrigin
 public class ToolsController {
 	
+	@Autowired
+    private Environment env;
 	
 	/*
 	 * 上传图片文件：
@@ -27,6 +33,7 @@ public class ToolsController {
 	@ResponseBody
 	@PostMapping("/uploadimg")
 	public Msg upLoadImg(@RequestParam("imgFile") MultipartFile imgFile) {
+		
 		String imgName = null;
 		if(imgFile.isEmpty()) {
 			return Msg.fail().resetMsg("未接收到图片文件");
@@ -41,7 +48,9 @@ public class ToolsController {
 			try {
 				int a = (int) (Math.random()*10000);
 				imgName = a+imgFile.getOriginalFilename();//链接随机数防止文件名重复
-				String path = ResourceUtils.getURL("classpath:").getPath()+File.separator+"static"+File.separator+"img"+File.separator;
+				//String path = ResourceUtils.getURL("classpath:").getPath()+File.separator+"static"+File.separator+"img"+File.separator;
+				String path =env.getProperty("web.upload-path");
+				
 				File uploadDir = new File(path);
 				if(!uploadDir.exists()) uploadDir.mkdirs();
 				//获取项目在当前机器上的真实绝对路径，将上传文件储存在项目的img文件夹中；
@@ -54,7 +63,7 @@ public class ToolsController {
 				e.printStackTrace();
 			}
 		}
-		return Msg.success().add("imgPath", "img/"+imgName);
+		return Msg.success().add("imgPath",imgName);
 	}
 	
 	
@@ -65,13 +74,13 @@ public class ToolsController {
 	@ResponseBody
 	@GetMapping("/delfile")
 	public Msg delFile(String fileName) {
-		String path = null;
-		try {
-			path = ResourceUtils.getURL("classpath:").getPath()+File.separator+"static"+File.separator+"img"+File.separator;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String path =env.getProperty("web.upload-path");
+		/*
+		 * try { path =
+		 * ResourceUtils.getURL("classpath:").getPath()+File.separator+"static"+File.
+		 * separator+"img"+File.separator; } catch (FileNotFoundException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); }
+		 */
 		File file = new File(path+fileName);
 		if (file.exists()) {
 			file.delete();
