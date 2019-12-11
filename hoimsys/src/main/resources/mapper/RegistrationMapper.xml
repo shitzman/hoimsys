@@ -17,6 +17,30 @@
   <sql id="Base_Column_List">
     r_id, p_id, dt_id, d_id, r_date, r_fee, ps_id, r_info, r_remark, r_pay_number, r_status
   </sql>
+  
+    
+  <select id="selectRegistrationBypIdAnddateTime" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from registration
+    where p_id = #{pId} and r_date = #{dateTime}
+  </select>
+  
+  <select id="selectRegistrationBypIdAndrStatus" parameterType="Integer" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from registration
+  	where p_id = #{pId} and r_status = #{rStatus}
+  </select>
+  
+  <select id="selectRegistrationBypIdAtIng" parameterType="Integer" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from registration
+  	where p_id = #{pId} and r_status BETWEEN 1 and 5
+  </select>
+  
+  <!-- MBG生成 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

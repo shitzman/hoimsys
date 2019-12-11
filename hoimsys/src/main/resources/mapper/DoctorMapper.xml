@@ -16,6 +16,33 @@
   <sql id="Base_Column_List">
     d_id, dt_id, t_id, d_name, d_sex, d_mobile, d_password, d_limits_number, d_img, d_info
   </sql>
+  
+  
+  
+  <!-- 根据部门id查询医生 -->
+  <select id="selectBydtId" parameterType="Integer" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from doctor 
+  	where dt_id = #{dtId}
+  </select>
+  <!--  -->
+  <select id="selectByLikeNameAndLimit1" parameterType="String" resultMap="BaseResultMap">
+  	<bind name="likeName" value="'%' + dName + '%'" />
+  	select 
+  	<include refid="Base_Column_List" />
+  	from doctor 
+  	where d_name like #{likeName} and d_limits_number=1
+  </select>  
+  
+  <select id="selectAllDoctor" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from doctor
+  </select>
+  
+  
+  <!-- MBG生成 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

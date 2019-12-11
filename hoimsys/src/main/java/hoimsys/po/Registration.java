@@ -1,7 +1,7 @@
 package hoimsys.po;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Registration {
     private Integer rId;
@@ -12,9 +12,9 @@ public class Registration {
 
     private Integer dId;
 
-    private Date rDate;
+    private Timestamp rDate;
 
-    private BigDecimal rFee;
+	private BigDecimal rFee;
 
     private Integer psId;
 
@@ -25,6 +25,14 @@ public class Registration {
     private String rPayNumber;
 
     private Integer rStatus;
+    
+    public Timestamp getrDate() {
+ 		return rDate;
+ 	}
+
+ 	public void setrDate(Timestamp rDate) {
+ 		this.rDate = rDate;
+ 	}
 
     public Integer getrId() {
         return rId;
@@ -58,13 +66,6 @@ public class Registration {
         this.dId = dId;
     }
 
-    public Date getrDate() {
-        return rDate;
-    }
-
-    public void setrDate(Date rDate) {
-        this.rDate = rDate;
-    }
 
     public BigDecimal getrFee() {
         return rFee;

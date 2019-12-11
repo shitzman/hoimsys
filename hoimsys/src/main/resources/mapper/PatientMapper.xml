@@ -17,6 +17,22 @@
     p_id, p_mobile, p_password, p_name, p_sex, p_birthday, p_id_card, p_address, p_status, 
     p_img
   </sql>
+  
+  <select id="selectByMobielAndPassword" parameterType="String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from patient
+  	where p_mobile = #{pMobile} and p_password = #{pPassword}
+  </select>
+    
+  <select id="selectByMobile" parameterType="String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from patient
+  	where p_mobile = #{pMobile}
+  </select>
+  
+  <!-- MBG 自动生成 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

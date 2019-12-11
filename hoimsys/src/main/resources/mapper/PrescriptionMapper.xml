@@ -14,6 +14,8 @@
   <sql id="Base_Column_List">
     ps_id, m_id, ps_price, ps_number, ps_pay_number, ps_remark, ps_status, p_id
   </sql>
+
+  <!-- MBG生成 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -7,11 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import hoimsys.HoimsysApplication;
 import hoimsys.po.Doctor;
 
 @RunWith(SpringRunner.class)
-@WebAppConfiguration
-@SpringBootTest
+@SpringBootTest(classes = {HoimsysApplication.class})
 public class DoctorTest {
 	
 	@Autowired
