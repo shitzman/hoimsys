@@ -13,9 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import hoimsys.bo.DayNumbers;
+import hoimsys.bo.DtDoctor;
 import hoimsys.bo.Msg;
+import hoimsys.po.Department;
 import hoimsys.po.Doctor;
+import hoimsys.po.Title;
+import hoimsys.service.DepartmentService;
 import hoimsys.service.DoctorService;
+import hoimsys.service.TitleService;
+import hoimsys.util.DateUtil;
 
 @Controller
 @RequestMapping("api/doctor")
@@ -24,6 +31,12 @@ public class DoctorController {
 
 	@Autowired
 	DoctorService doctorService;
+	@Autowired
+	TitleService titleService;
+	@Autowired
+	DateUtil dateUtil;
+	@Autowired
+	DepartmentService departmentService;
 
 	/*
 	 * 根据医生ID返回医生信息
@@ -32,10 +45,13 @@ public class DoctorController {
 	@GetMapping("/getdoctor")
 	Msg doctorBydId(Integer dId) {
 		Doctor doctor = doctorService.getOneDoctorBydId(dId);
+		Title title = titleService.getTitleBytId(doctor.gettId());
+		List<DayNumbers> dayNumbersList = dateUtil.getDaysRegistrationCount(dId, 4);
+		Department department = departmentService.getByPrimaryKey(doctor.getDtId());
 		if (doctor == null) {
 			return Msg.fail();
 		}
-		return Msg.success().add("doctor", doctor);
+		return Msg.success().add("doctor", doctor).add("title", title).add("dayNumList", dayNumbersList).add("department", department);
 	}
 	
 	/*
@@ -50,9 +66,9 @@ public class DoctorController {
 			@RequestParam(value = "dName", defaultValue = "") String dName) {
 		
 		PageHelper.startPage(pageNum, pageSize);
-		List<Doctor> doctorList = doctorService.getListDoctorBydtIdAndLikedName(dtId,dName);
+		List<DtDoctor> doctorList = doctorService.getListDoctorBydtIdAndLikedName(dtId,dName);
 		
-		PageInfo<Doctor> pageDoctorList = new PageInfo<Doctor>(doctorList);
+		PageInfo<DtDoctor> pageDoctorList = new PageInfo<DtDoctor>(doctorList);
 		
 		return Msg.success().add("pageDoctorList", pageDoctorList);
 	}

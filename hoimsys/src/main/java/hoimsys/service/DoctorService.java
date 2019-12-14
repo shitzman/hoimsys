@@ -2,6 +2,7 @@ package hoimsys.service;
 
 import java.util.List;
 
+import hoimsys.bo.DtDoctor;
 import hoimsys.po.Doctor;
 
 public interface DoctorService {
@@ -22,6 +23,6 @@ public interface DoctorService {
 	 * 只存在一个时，则按此条件查询所有科室医生
 	 * 若无条件时，测返回所有科室医生
 	 */
-	List<Doctor> getListDoctorBydtIdAndLikedName(Integer dtId, String dName);
+	List<DtDoctor> getListDoctorBydtIdAndLikedName(Integer dtId, String dName);
 
 }

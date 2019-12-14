@@ -40,6 +40,18 @@
   	where p_id = #{pId} and r_status BETWEEN 1 and 5
   </select>
   
+  <select id="selectNumbersByDateAnddId" resultType="Integer">
+  	select COUNT(*)
+	from registration
+	where DATE(r_date) = #{rDate} and d_id = #{tId}
+  </select>
+  
+  <select id="selectNumbersBydId" resultType="Integer">
+  	select COUNT(*)
+	from registration
+	where d_id = #{tId}
+  </select>
+  
   <!-- MBG生成 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

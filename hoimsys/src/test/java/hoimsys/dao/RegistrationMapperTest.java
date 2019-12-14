@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import hoimsys.po.Registration;
+import hoimsys.util.DateUtil;
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
@@ -20,6 +21,8 @@ public class RegistrationMapperTest {
 	
 	@Autowired
 	RegistrationMapper regMapper;
+	@Autowired
+	DateUtil dateUtil;
 	
 	@Test
 	void selectRegistrationBypIdAnddateTimeTest() {
@@ -33,6 +36,12 @@ public class RegistrationMapperTest {
 		}
 		Registration re = regMapper.selectRegistrationBypIdAnddateTime(2, date1);
 		System.out.println(re);
+	}
+	
+	@Test
+	void dateTest() {
+		System.out.println(dateUtil.getDaysRegistrationCount(1,4));
+		//System.out.println(regMapper.selectNumbersByDateAnddId("2019-12-03", 7));
 	}
 
 

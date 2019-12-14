@@ -10,8 +10,8 @@ import java.util.Map;
 public class Msg {
 	/*
 	 * 状态码
-	 * 100:处理成功
-	 * 200:处理失败
+	 * 100:处理失败
+	 * 200:处理成功
 	 */
 	private Integer code;
 	//是否成功
@@ -24,7 +24,7 @@ public class Msg {
 	
 	public static Msg success(){
 		Msg result = new Msg();
-		result.setCode(100);
+		result.setCode(200);
 		result.setMsg("处理成功");
 		result.setSuccess(true);
 		return result;
@@ -32,7 +32,7 @@ public class Msg {
 	
 	public static Msg fail(){
 		Msg result = new Msg();
-		result.setCode(200);
+		result.setCode(100);
 		result.setMsg("处理失败");
 		result.setSuccess(false);
 		return result;

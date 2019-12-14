@@ -13,32 +13,72 @@
     <result column="d_img" jdbcType="VARCHAR" property="dImg" />
     <result column="d_info" jdbcType="VARCHAR" property="dInfo" />
   </resultMap>
+  
+  <resultMap id="DtDoctorResultMap" type="hoimsys.bo.DtDoctor">
+    <id column="d_id" jdbcType="INTEGER" property="dId" />
+    <result column="dt_id" jdbcType="INTEGER" property="dtId" />
+    <result column="t_id" jdbcType="INTEGER" property="tId" />
+    <result column="d_name" jdbcType="VARCHAR" property="dName" />
+    <result column="d_sex" jdbcType="VARCHAR" property="dSex" />
+    <result column="d_mobile" jdbcType="VARCHAR" property="dMobile" />
+    <result column="d_password" jdbcType="VARCHAR" property="dPassword" />
+    <result column="d_limits_number" jdbcType="INTEGER" property="dLimitsNumber" />
+    <result column="d_img" jdbcType="VARCHAR" property="dImg" />
+    <result column="d_info" jdbcType="VARCHAR" property="dInfo" />
+    <association property="title" javaType="Title">
+    	 <id column="tid2" jdbcType="INTEGER" property="tId" />
+	    <result column="t_name" jdbcType="VARCHAR" property="tName" />
+	    <result column="t_fee" jdbcType="DECIMAL" property="tFee" />
+	    <result column="t_remark" jdbcType="VARCHAR" property="tRemark" />
+    </association>
+    <association property="department" javaType="Department">
+    	<id column="dtid2" jdbcType="INTEGER" property="dtId" />
+	    <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
+	    <result column="dt_mobile" jdbcType="VARCHAR" property="dtMobile" />
+	    <result column="dt_room_number" jdbcType="VARCHAR" property="dtRoomNumber" />
+	    <result column="dt_info" jdbcType="VARCHAR" property="dtInfo" />
+	    <result column="dt_img" jdbcType="VARCHAR" property="dtImg" />
+    </association>
+  </resultMap>
   <sql id="Base_Column_List">
-    d_id, dt_id, t_id, d_name, d_sex, d_mobile, d_password, d_limits_number, d_img, d_info
+    d_id, dt_id, t_id, d_name, d_sex, d_mobile, d_limits_number, d_img, d_info
   </sql>
   
-  
+  <sql id="DtDoctor_Column_List">
+    d.d_id, d.dt_id, d.t_id, d.d_name, d_sex, d.d_mobile, d.d_limits_number, d.d_img, d.d_info,
+			  	t.t_id as tid2, t.t_name, t.t_fee, t.t_remark,
+			  	dt.dt_id as dtid2, dt.dt_name, dt.dt_mobile, dt.dt_room_number, dt.dt_info, dt.dt_img
+  </sql>
   
   <!-- 根据部门id查询医生 -->
-  <select id="selectBydtId" parameterType="Integer" resultMap="BaseResultMap">
+  <select id="selectBydtId" parameterType="Integer" resultMap="DtDoctorResultMap">
   	select 
   	<include refid="Base_Column_List" />
-  	from doctor 
+  	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id 
   	where dt_id = #{dtId}
   </select>
-  <!--  -->
-  <select id="selectByLikeNameAndLimit1" parameterType="String" resultMap="BaseResultMap">
+  
+  <!-- 所有科室医生 -->
+    <select id="selectByLikeNameAndLimit1" parameterType="String" resultMap="DtDoctorResultMap">
+	  	<bind name="likeName" value="'%' + dName + '%'" />
+	  	select 	
+	  	<include refid="DtDoctor_Column_List" />
+	  	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id
+		where d_name like #{likeName} and d_limits_number=1
+	</select>  
+  
+<!--   <select id="selectByLikeNameAndLimit1" parameterType="String" resultMap="BaseResultMap">
   	<bind name="likeName" value="'%' + dName + '%'" />
   	select 
   	<include refid="Base_Column_List" />
   	from doctor 
   	where d_name like #{likeName} and d_limits_number=1
-  </select>  
+  </select>   -->
   
-  <select id="selectAllDoctor" resultMap="BaseResultMap">
+  <select id="selectAllDoctor" resultMap="DtDoctorResultMap">
   	select 
-  	<include refid="Base_Column_List" />
-  	from doctor
+  	<include refid="DtDoctor_Column_List" />
+  	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id
   </select>
   
   

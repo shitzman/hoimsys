@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import hoimsys.bo.DtDoctor;
 import hoimsys.dao.DoctorMapper;
+import hoimsys.dao.RegistrationMapper;
 import hoimsys.po.Doctor;
 import hoimsys.service.DoctorService;
 
@@ -16,6 +18,8 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Autowired
 	DoctorMapper doctorMapper;
+	@Autowired
+	RegistrationMapper regMapper;
 	@Override
 	public Doctor getOneDoctorBydId(Integer dId) {
 		// TODO Auto-generated method stub
@@ -39,28 +43,57 @@ public class DoctorServiceImpl implements DoctorService {
 	 * 若无条件时，测返回所有科室医生
 	 */
 	@Override
-	public List<Doctor> getListDoctorBydtIdAndLikedName(Integer dtId, String dName) {
+	public List<DtDoctor> getListDoctorBydtIdAndLikedName(Integer dtId, String dName) {
 
-		List<Doctor> doctorList = new ArrayList<Doctor>();
+		List<DtDoctor> doctorList = new ArrayList<DtDoctor>();
+		
+		//条件都不为空
 		if(dtId !=0 && dName != "") {
-			List<Doctor> temDoctorList = doctorMapper.selectByLikeNameAndLimit1(dName);
-			for(Doctor temD : temDoctorList) {
+			List<DtDoctor> temDoctorList = doctorMapper.selectByLikeNameAndLimit1(dName);
+			for(DtDoctor temD : temDoctorList) {
 				if(temD.getDtId() == dtId) {
 					doctorList.add(temD);
 				}
 			}
+			//为查询到的所有医生统计其历史挂号单总预约量
+			for(int i=0; i<doctorList.size(); i++) {
+				doctorList.get(i).setRegNumbers(
+						regMapper.selectNumbersBydId(doctorList.get(i).getdId())
+						);
+			}
 			
 			return doctorList;
 		}
-		
+		//只按名称查询
 		if(dName != "") {
-			return doctorMapper.selectByLikeNameAndLimit1(dName);
+			doctorList = doctorMapper.selectByLikeNameAndLimit1(dName);
+			//为查询到的所有医生统计其历史挂号单总预约量
+			for(int i=0; i<doctorList.size(); i++) {
+				doctorList.get(i).setRegNumbers(
+						regMapper.selectNumbersBydId(doctorList.get(i).getdId())
+						);
+			}
+			return doctorList;
 		}
+		//只按部门查询
 		if(dtId != 0) {
-			return doctorMapper.selectBydtId(dtId);
+			doctorList = doctorMapper.selectBydtId(dtId);
+			//为查询到的所有医生统计其历史挂号单总预约量
+			for(int i=0; i<doctorList.size(); i++) {
+				doctorList.get(i).setRegNumbers(
+						regMapper.selectNumbersBydId(doctorList.get(i).getdId())
+						);
+			}
+			return doctorList;
 		}
-		
-		return doctorMapper.selectAllDoctor();
+		doctorList = doctorMapper.selectAllDoctor();
+		//为查询到的所有医生统计其历史挂号单总预约量
+		for(int i=0; i<doctorList.size(); i++) {
+			doctorList.get(i).setRegNumbers(
+					regMapper.selectNumbersBydId(doctorList.get(i).getdId())
+					);
+		}
+		return doctorList;
 	}
 
 }

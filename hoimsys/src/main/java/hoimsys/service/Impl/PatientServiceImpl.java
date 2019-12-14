@@ -65,10 +65,11 @@ public class PatientServiceImpl implements PatientService {
 		// TODO Auto-generated method stub
 		Registration registration = new Registration();
 		
-		Timestamp rDate = new Timestamp(dateTime*1000);//将时间戳转为date格式；
-		if(registrationMapper.selectRegistrationBypIdAnddateTime(pId, rDate)!=null) {
-			return null;
-		}
+		//将时间戳转为date格式；10位
+		//Timestamp rDate = new Timestamp(dateTime*1000);
+		
+		//将时间戳转为date格式；13位
+		Timestamp rDate = new Timestamp(dateTime);
 		
 		Doctor doctor = doctorMapper.selectByPrimaryKey(dId);//获取医生信息，需要部门id;以及tid获取挂其号所需费用；
 		Title title = titleMapper.selectByPrimaryKey(doctor.gettId());
@@ -79,7 +80,6 @@ public class PatientServiceImpl implements PatientService {
 		registration.setrFee(BigDecimal.valueOf(title.gettFee()));
 		registration.setrStatus(0);//未缴费
 		registration.setrPayNumber("0");
-		
 		int flag = registrationMapper.insertSelective(registration);
 		if(flag>0) {
 			return registrationMapper.selectRegistrationBypIdAnddateTime(pId, rDate);

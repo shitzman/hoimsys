@@ -28,4 +28,11 @@ public interface RegistrationMapper {
     
     //根据病人id查询所有处于进行中的挂号单(1-5)之间的状态
     List<Registration> selectRegistrationBypIdAtIng(@Param("pId")Integer pId);
+    
+    //根据日期以及医生id查询当天的挂号单数量
+    int selectNumbersByDateAnddId(@Param("rDate")String rDate, @Param("tId")Integer dId);
+    
+    //根据医生id返回挂号单数量
+    int selectNumbersBydId(@Param("tId")Integer dId);
+    
 }
