@@ -25,8 +25,8 @@ public class DateUtil {
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
 		for(int i=0; i<days; i++) {
-			calendar.add(calendar.DATE,i);//把日期往后增加i天.整数往后推,负数往前移动
-			date=calendar.getTime(); //这个时间就是日期往后推i天的结果 
+			calendar.add(calendar.DATE,1);//把日期往后增加1天.整数往后推,负数往前移动
+			date=calendar.getTime(); //这个时间就是日期往后推1天的结果 
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			int num = regMapper.selectNumbersByDateAnddId(formatter.format(date), dId);
 			dayNumbersList.add(new DayNumbers(date.getTime(),num));

@@ -29,6 +29,7 @@ public interface DoctorMapper {
     //获取全部科室医生信息
     List<DtDoctor> selectAllDoctor();
     
-    
+    //根据医生id查询医生详情信息
+    DtDoctor selectBydId(Integer dId);
     
 }

@@ -57,7 +57,7 @@ public class PatientController {
 	public Msg patientLogin(String pMobile, String pPassword) {
 		Patient patient  = patientService.getPatientByMobielAndPassword(pMobile, pPassword);
 		if(patient != null) {
-			return Msg.success().add("patient", patient);
+			return Msg.success().add("patient", patient).resetMsg("登录成功");
 		}
 		return Msg.fail().resetMsg("登录失败");
 	}
@@ -102,6 +102,7 @@ public class PatientController {
 	/*
 	 * 根据病人id以及挂号单所处状态查询挂号单
 	 * 默认-1查询所有处于进行中状态的挂号单
+	 * (废弃）
 	 */
 	@ResponseBody
 	@GetMapping("/order")

@@ -24,5 +24,8 @@ public interface DoctorService {
 	 * 若无条件时，测返回所有科室医生
 	 */
 	List<DtDoctor> getListDoctorBydtIdAndLikedName(Integer dtId, String dName);
+	
+	//根据医生id获取医生详情信息DtDoctorff
+	DtDoctor getDtDoctorBydId(Integer dId);
 
 }

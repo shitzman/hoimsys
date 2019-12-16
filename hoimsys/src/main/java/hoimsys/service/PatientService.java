@@ -23,5 +23,8 @@ public interface PatientService {
 	
 	//根据病人id以及挂号单所处状态查询挂号单
 	List<Registration> getRegistrationsBypIdAndrStatus(Integer pId, Integer rStatus);
+	
+	//根据病人id查询病人信息
+	Patient getPatientBypId(Integer pId);
 
 }

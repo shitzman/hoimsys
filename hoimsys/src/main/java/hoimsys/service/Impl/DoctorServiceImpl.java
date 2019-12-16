@@ -96,4 +96,10 @@ public class DoctorServiceImpl implements DoctorService {
 		return doctorList;
 	}
 
+	@Override
+	public DtDoctor getDtDoctorBydId(Integer dId) {
+		// TODO Auto-generated method stub
+		return doctorMapper.selectBydId(dId);
+	}
+
 }

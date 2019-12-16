@@ -78,7 +78,8 @@ public class PatientServiceImpl implements PatientService {
 		registration.setdId(dId);
 		registration.setDtId(doctor.getDtId());
 		registration.setrFee(BigDecimal.valueOf(title.gettFee()));
-		registration.setrStatus(0);//未缴费
+		//registration.setrStatus(0);//未缴费
+		registration.setrStatus(1);//默认已缴费，跳过挂号单缴费模块……
 		registration.setrPayNumber("0");
 		int flag = registrationMapper.insertSelective(registration);
 		if(flag>0) {
@@ -106,6 +107,11 @@ public class PatientServiceImpl implements PatientService {
 		}
 		
 		return registrationMapper.selectRegistrationBypIdAndrStatus(pId, rStatus);
+	}
+	@Override
+	public Patient getPatientBypId(Integer pId) {
+		// TODO Auto-generated method stub
+		return patientMapper.selectByPrimaryKey(pId);
 	}
 
 	

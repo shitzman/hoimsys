@@ -41,5 +41,9 @@ class DoctorMapperTest {
 		System.out.println(path);
 	}
 
+	@Test
+	void selectDtDoctByDId() {
+		System.out.println(doctorMapper.selectBydId(1));
+	}
 
 }

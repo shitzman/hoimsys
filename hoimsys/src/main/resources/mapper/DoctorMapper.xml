@@ -50,10 +50,19 @@
 			  	dt.dt_id as dtid2, dt.dt_name, dt.dt_mobile, dt.dt_room_number, dt.dt_info, dt.dt_img
   </sql>
   
+  <!-- 根据医生ID查询医生详情信息 -->
+  <select id="selectBydId" parameterType="Integer" resultMap="DtDoctorResultMap">
+  	select 
+  	<include refid="DtDoctor_Column_List" />
+  	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id 
+  	where d.d_id = #{dId}
+  </select>
+  
   <!-- 根据部门id查询医生 -->
   <select id="selectBydtId" parameterType="Integer" resultMap="DtDoctorResultMap">
   	select 
-  	<include refid="Base_Column_List" />
+  	<!-- <include refid="Base_Column_List" /> -->
+  	<include refid="DtDoctor_Column_List" />
   	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id 
   	where dt_id = #{dtId}
   </select>

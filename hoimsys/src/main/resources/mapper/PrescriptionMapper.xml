@@ -11,9 +11,50 @@
     <result column="ps_status" jdbcType="VARCHAR" property="psStatus" />
     <result column="p_id" jdbcType="INTEGER" property="pId" />
   </resultMap>
+  
+  <resultMap id="PrescriptionInMedicResultMap" type="hoimsys.bo.PrescriptionInMedic">
+    <id column="ps_id" jdbcType="INTEGER" property="psId" />
+    <result column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="ps_price" jdbcType="DECIMAL" property="psPrice" />
+    <result column="ps_number" jdbcType="INTEGER" property="psNumber" />
+    <result column="ps_pay_number" jdbcType="VARCHAR" property="psPayNumber" />
+    <result column="ps_remark" jdbcType="VARCHAR" property="psRemark" />
+    <result column="ps_status" jdbcType="VARCHAR" property="psStatus" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+    <association property="medicine" javaType="hoimsys.po.Medicine">
+    	<result column="mid" jdbcType="INTEGER" property="mId" />
+	    <result column="m_name" jdbcType="VARCHAR" property="mName" />
+	    <result column="m_brand" jdbcType="VARCHAR" property="mBrand" />
+	    <result column="m_specifications" jdbcType="VARCHAR" property="mSpecifications" />
+	    <result column="m_type" jdbcType="VARCHAR" property="mType" />
+	    <result column="m_price" jdbcType="DECIMAL" property="mPrice" />
+	    <result column="m_remark" jdbcType="VARCHAR" property="mRemark" />
+	    <result column="m_img" jdbcType="VARCHAR" property="mImg" />
+    </association>
+  </resultMap>
+  
   <sql id="Base_Column_List">
     ps_id, m_id, ps_price, ps_number, ps_pay_number, ps_remark, ps_status, p_id
   </sql>
+  <sql id="PrescriptionInMedic_Column_List">
+    ps_id, p.m_id, ps_price, ps_number, ps_pay_number, ps_remark, ps_status, p_id,
+    m.m_id as mid, m_name, m_brand, m_specifications, m_type, m_price, m_remark, m_img
+  </sql>
+  
+  <select id="selectAllPrescriptionBypsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from prescription
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 废弃 -->
+  <select id="selectPrescriptionBypsId" parameterType="Integer" resultMap="PrescriptionInMedicResultMap">
+  	select 
+    <include refid="PrescriptionInMedic_Column_List" />
+    from prescription p LEFT JOIN medicine m on p.m_id = m.m_id
+    where ps_id = #{psId}
+  </select>
 
   <!-- MBG生成 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

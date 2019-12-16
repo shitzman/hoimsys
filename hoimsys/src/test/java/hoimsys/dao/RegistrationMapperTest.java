@@ -43,6 +43,8 @@ public class RegistrationMapperTest {
 		System.out.println(dateUtil.getDaysRegistrationCount(1,4));
 		//System.out.println(regMapper.selectNumbersByDateAnddId("2019-12-03", 7));
 	}
+	
+
 
 
 }
