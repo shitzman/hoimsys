@@ -50,6 +50,22 @@
 			  	dt.dt_id as dtid2, dt.dt_name, dt.dt_mobile, dt.dt_room_number, dt.dt_info, dt.dt_img
   </sql>
   
+  <!-- 根据医生手机号获取医生信息 -->
+  <select id="selectDoctorBydMobile" parameterType="String" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where d_mobile = #{d_mobile}
+  </select>
+  
+  <!-- 医生登录 -->
+  <select id="selectDtDoctorByMobileAndPwdAndLimit" resultMap="DtDoctorResultMap">
+  	select 
+  	<include refid="DtDoctor_Column_List" />
+  	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id 
+  	where d.d_mobile = #{dMobile} and d.d_password = #{dPassword} and d.d_limits_number = #{dLimitsNumber}
+  </select>
+  
   <!-- 根据医生ID查询医生详情信息 -->
   <select id="selectBydId" parameterType="Integer" resultMap="DtDoctorResultMap">
   	select 

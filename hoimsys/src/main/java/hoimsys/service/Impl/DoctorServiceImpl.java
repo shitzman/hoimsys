@@ -102,4 +102,31 @@ public class DoctorServiceImpl implements DoctorService {
 		return doctorMapper.selectBydId(dId);
 	}
 
+	@Override
+	public DtDoctor loginDtDoctor(String dMoile, String dPassword, Integer dLimitsNumber) {
+		// TODO Auto-generated method stub
+		return doctorMapper.selectDtDoctorByMobileAndPwdAndLimit(dMoile, dPassword, dLimitsNumber);
+	}
+
+	@Override
+	public Doctor getDoctorBydMobile(String dMobile) {
+		// TODO Auto-generated method stub
+		return doctorMapper.selectDoctorBydMobile(dMobile);
+	}
+
+	/*
+	 * 	医院方，医生注册
+	 */
+	@Override
+	public Doctor saveDoctor(Doctor doctor) {
+		// TODO Auto-generated method stub
+		doctor.setdLimitsNumber(0);//初始化权限为0，等待超级管理员为其重新分配身份
+		
+		if(doctorMapper.insertSelective(doctor)>0) {
+			return doctorMapper.selectDoctorBydMobile(doctor.getdMobile());
+		}
+		
+		return null;
+	}
+
 }

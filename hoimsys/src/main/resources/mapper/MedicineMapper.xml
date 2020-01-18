@@ -15,6 +15,12 @@
     m_id, m_name, m_brand, m_specifications, m_type, m_price, m_remark, m_img
   </sql>
   
+  <select id="selectListMedicine" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from medicine
+  </select>
+  
   
   <!-- MBG 自动生成 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

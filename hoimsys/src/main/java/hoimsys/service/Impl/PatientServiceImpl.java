@@ -81,6 +81,9 @@ public class PatientServiceImpl implements PatientService {
 		//registration.setrStatus(0);//未缴费
 		registration.setrStatus(1);//默认已缴费，跳过挂号单缴费模块……
 		registration.setrPayNumber("0");
+		
+		int psId = (int)(pId+dateTime);
+		registration.setPsId(psId);	//生成药单编号
 		int flag = registrationMapper.insertSelective(registration);
 		if(flag>0) {
 			return registrationMapper.selectRegistrationBypIdAnddateTime(pId, rDate);

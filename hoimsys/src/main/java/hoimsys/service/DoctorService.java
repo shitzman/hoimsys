@@ -27,5 +27,14 @@ public interface DoctorService {
 	
 	//根据医生id获取医生详情信息DtDoctorff
 	DtDoctor getDtDoctorBydId(Integer dId);
+	
+	//医生登录
+	DtDoctor loginDtDoctor(String dMoile, String dPassword, Integer dLimitsNumber);
+	
+	//根据医生手机号获取医生信息
+	Doctor getDoctorBydMobile(String dMobile);
+	
+	//医生注册
+	Doctor saveDoctor(Doctor doctor);
 
 }

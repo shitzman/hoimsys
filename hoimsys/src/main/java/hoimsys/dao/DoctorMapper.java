@@ -32,4 +32,13 @@ public interface DoctorMapper {
     //根据医生id查询医生详情信息
     DtDoctor selectBydId(Integer dId);
     
+    //医生登录
+    DtDoctor selectDtDoctorByMobileAndPwdAndLimit(
+    		@Param("dMobile")String dMobile, 
+    		@Param("dPassword")String dPassword, 
+    		@Param("dLimitsNumber")Integer dLimitsNumber);
+    
+    //根据医生的手机号获取医生信息
+    Doctor selectDoctorBydMobile(String dMobile);
+    
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hoimsys.bo.DoctorRegAndPat;
 import hoimsys.bo.RegistrationAndDtDoctor;
 import hoimsys.dao.DoctorMapper;
 import hoimsys.dao.RegistrationMapper;
@@ -63,6 +64,33 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public Registration getRegistrationByrId(Integer rId) {
 		// TODO Auto-generated method stub
 		return regMapper.selectByPrimaryKey(rId);
+	}
+	@Override
+	public Integer UpdageRegInfoAndRemark(Registration reg) {
+		// TODO Auto-generated method stub
+		Integer psId = -1;
+		//如果修改成功，则根据返回此挂号单的药单id；
+		if(regMapper.updateByPrimaryKeySelective(reg)>0) {
+			Registration r = regMapper.selectByPrimaryKey(reg.getrId());
+			psId = r.getPsId();
+		}
+		/*
+		 * 历史遗留问题，若挂号单没有药单编号，则设置挂号单编号为药单编号
+		 */
+		if(psId == null) {
+			psId = reg.getrId();
+			Registration r = new Registration();
+			r.setPsId(psId);
+			r.setrId(psId);
+			regMapper.updateByPrimaryKeySelective(r);
+		}
+		
+		return psId;
+	}
+	@Override
+	public List<DoctorRegAndPat> getDoctorRegAndPatBydIdAndrStatus(Integer dId, Integer rStatus) {
+		// TODO Auto-generated method stub
+		return regMapper.selectDoctorRegAndPatBydIdAndrStatus(dId, rStatus);
 	}
 
 }

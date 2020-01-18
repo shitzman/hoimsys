@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import hoimsys.bo.DoctorRegAndPat;
 import hoimsys.po.Registration;
 
 public interface RegistrationMapper {
@@ -34,5 +35,8 @@ public interface RegistrationMapper {
     
     //根据医生id返回挂号单数量
     int selectNumbersBydId(@Param("tId")Integer dId);
+    
+    //根据医生id以及挂号单状态查询该医生所处理的挂号单信息
+  	List<DoctorRegAndPat> selectDoctorRegAndPatBydIdAndrStatus(@Param("dId")Integer dId, @Param("rStatus")Integer rStatus);
     
 }
