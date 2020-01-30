@@ -54,6 +54,12 @@
     from prescription 
     where ps_id = #{psId} and m_id = #{mId}
   </select>
+  
+  <select id="selectMedsBypsId" parameterType="java.lang.Integer" resultType="hoimsys.bo.MedDetails">
+  	select p.ps_id,p.m_id,p.ps_price,p.ps_number,m.m_name,m.m_brand,m.m_specifications,m.m_type,m.m_img
+	from prescription p LEFT JOIN medicine m on p.m_id = m.m_id 
+	WHERE p.ps_id = #{psId}
+  </select>
 
   
   <!-- 废弃 -->

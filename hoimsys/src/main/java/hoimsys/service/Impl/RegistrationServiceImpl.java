@@ -92,5 +92,18 @@ public class RegistrationServiceImpl implements RegistrationService {
 		// TODO Auto-generated method stub
 		return regMapper.selectDoctorRegAndPatBydIdAndrStatus(dId, rStatus);
 	}
+	@Override
+	public List<DoctorRegAndPat> getAllDoctorRegAndPatBydIdAndrStatus(Integer rStatus) {
+		// TODO Auto-generated method stub
+		return regMapper.selectAllDoctorRegAndPatBydIdAndrStatus(rStatus);
+	}
+	@Override
+	public int changerStatusByregId(Integer regId, Integer rStatus) {
+		// TODO Auto-generated method stub
+		Registration reg = new Registration();
+		reg.setrId(regId);
+		reg.setrStatus(rStatus);
+		return regMapper.updateByPrimaryKeySelective(reg);
+	}
 
 }

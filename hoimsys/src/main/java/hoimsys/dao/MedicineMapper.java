@@ -18,4 +18,6 @@ public interface MedicineMapper {
     int updateByPrimaryKey(Medicine record);
     
     List<Medicine> selectListMedicine();
+    
+    
 }

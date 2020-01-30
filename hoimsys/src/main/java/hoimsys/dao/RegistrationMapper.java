@@ -38,5 +38,8 @@ public interface RegistrationMapper {
     
     //根据医生id以及挂号单状态查询该医生所处理的挂号单信息
   	List<DoctorRegAndPat> selectDoctorRegAndPatBydIdAndrStatus(@Param("dId")Integer dId, @Param("rStatus")Integer rStatus);
+  	
+  //根据挂号单状态查询所有的挂号单信息
+  	List<DoctorRegAndPat> selectAllDoctorRegAndPatBydIdAndrStatus(Integer rStatus);
     
 }

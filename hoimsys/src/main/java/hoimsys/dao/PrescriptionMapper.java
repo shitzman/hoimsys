@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import hoimsys.bo.MedDetails;
 import hoimsys.bo.PrescriptionInMedic;
 import hoimsys.po.Prescription;
 
@@ -29,4 +30,7 @@ public interface PrescriptionMapper {
     
     //根据药单id以及药品id查询记录
     Prescription getPrescriptionByrIdAndpsId(@Param("mId")Integer mId, @Param("psId")Integer psId);
+    
+    //根据药单id查询所有药品详情
+    List<MedDetails> selectMedsBypsId(Integer psId);
 }

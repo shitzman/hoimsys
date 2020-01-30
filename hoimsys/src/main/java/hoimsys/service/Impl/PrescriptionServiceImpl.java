@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hoimsys.bo.MedDetails;
 import hoimsys.bo.PrescriptionAndMedic;
 import hoimsys.bo.PrescriptionInMedic;
 import hoimsys.dao.MedicineMapper;
@@ -86,6 +87,13 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 		}
 		
 		return 0;
+	}
+
+
+	@Override
+	public List<MedDetails> getMedsBypsId(Integer psId) {
+		// TODO Auto-generated method stub
+		return prescriptionMapper.selectMedsBypsId(psId);
 	}
 
 }

@@ -18,8 +18,14 @@
     r_id, p_id, dt_id, d_id, r_date, r_fee, ps_id, r_info, r_remark, r_pay_number, r_status
   </sql>
   
+  <select id = "selectAllDoctorRegAndPatBydIdAndrStatus" parameterType="Integer" resultType="hoimsys.bo.DoctorRegAndPat">
+  	SELECT p.p_name,p.p_sex,p.p_birthday,p.p_img,r.r_id,r.r_date,r.r_status,r.r_info,r.r_remark,r.ps_id
+		FROM registration r LEFT JOIN patient p on r.p_id = p.p_id
+		WHERE r.r_status = #{rStatus}
+  </select>
+  
 	<select id="selectDoctorRegAndPatBydIdAndrStatus" parameterType="Integer" resultType="hoimsys.bo.DoctorRegAndPat">
-		SELECT p.p_name,p.p_sex,p.p_birthday,p.p_img,r.r_id,r.r_date,r.r_status,r.r_info,r.r_remark
+		SELECT p.p_name,p.p_sex,p.p_birthday,p.p_img,r.r_id,r.r_date,r.r_status,r.r_info,r.r_remark,r.ps_id
 		FROM registration r LEFT JOIN patient p on r.p_id = p.p_id
 		WHERE r.d_id = #{dId} and r.r_status = #{rStatus}
 	</select>  

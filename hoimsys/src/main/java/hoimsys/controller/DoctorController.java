@@ -18,6 +18,7 @@ import hoimsys.bo.DayNumbers;
 import hoimsys.bo.DoctorRegAndPat;
 import hoimsys.bo.DoctorUpdateReg;
 import hoimsys.bo.DtDoctor;
+import hoimsys.bo.MedDetails;
 import hoimsys.bo.Msg;
 import hoimsys.po.Department;
 import hoimsys.po.Doctor;
@@ -48,6 +49,53 @@ public class DoctorController {
 	@Autowired
 	PrescriptionService preService;
 	
+	/*
+	 * 	医院方
+	 * 	药品管理员将挂号单状态改为5（取药完毕动作）
+	 * 	接受参数，挂号单id（regId)
+	 */
+	@PostMapping("/medadmin/finish")
+	Msg MedAdminChangeRegStatus(Integer regId) {
+		if(regService.changerStatusByregId(regId, 5)>0) {
+			return Msg.success().resetMsg("取药成功");
+		}
+		return Msg.fail();
+	}
+	
+	
+	
+	/*
+	 * 	医院方
+	 * 	药品管理员获取所有挂号单状态为3的挂号单列表（此时状态为待取药）
+	 */
+	@GetMapping("/medadmin/getreg")
+	Msg MedAdminShowReg(
+			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
+		
+		PageHelper.startPage(pageNum, pageSize);
+		List<DoctorRegAndPat> drp = regService.getAllDoctorRegAndPatBydIdAndrStatus(3);//3状态为挂号单已处理单为取药的状态
+		PageInfo<DoctorRegAndPat> pageDrpList = new PageInfo<DoctorRegAndPat>(drp);
+		
+		return Msg.success().add("pageDrpList", pageDrpList);
+	}
+	
+	/*
+	 * 	药品管理员，获取 待处理  或  已处理   的挂号单（待取药列表）信息列表后，
+	 * 	根据药单编号，获取该药单所有药品详情
+	 */
+	@GetMapping("/getmeds")
+	Msg MedicineAdminShowMeds(Integer psId,
+			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
+		
+		PageHelper.startPage(pageNum, pageSize);
+		List<MedDetails> medsList = preService.getMedsBypsId(psId);
+		
+		PageInfo<MedDetails> pageMeds = new PageInfo<MedDetails>(medsList);
+		
+		return Msg.success().add("pageMeds", pageMeds);
+	}
 	/*
 	 *	 医院方，医生修改挂号单信息 接收json格式：
 	 *  { 
@@ -102,8 +150,8 @@ public class DoctorController {
 		
 		PageHelper.startPage(pageNum, pageSize);
 		List<DoctorRegAndPat> drp = regService.getDoctorRegAndPatBydIdAndrStatus(dId, rStatus);//1状态为待诊断状态
-		
 		PageInfo<DoctorRegAndPat> pageDrpList = new PageInfo<DoctorRegAndPat>(drp);
+		
 		return Msg.success().add("pageDrpList", pageDrpList);
 	}
 	

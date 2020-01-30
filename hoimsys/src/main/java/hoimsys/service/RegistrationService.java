@@ -28,5 +28,11 @@ public interface RegistrationService {
   	
   	//根据医生id以及挂号单状态查询该医生所处理的挂号单信息
   	List<DoctorRegAndPat> getDoctorRegAndPatBydIdAndrStatus(Integer dId, Integer rStatus);
+  	
+  //根据挂号单状态查询所有的挂号单信息
+  	List<DoctorRegAndPat> getAllDoctorRegAndPatBydIdAndrStatus(Integer rStatus);
+  	
+  	//根据挂号单id（regId)修改挂号单状态(rStatus)
+  	int changerStatusByregId(Integer regId, Integer rStatus);
 
 }

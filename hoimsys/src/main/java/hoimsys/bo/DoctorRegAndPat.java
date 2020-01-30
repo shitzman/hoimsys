@@ -27,7 +27,16 @@ public class DoctorRegAndPat {
 
     private String rRemark;	//挂号病因详情
     
+    private Integer psId; //药单编号（为药品管理员新增）
     
+
+	public Integer getPsId() {
+		return psId;
+	}
+
+	public void setPsId(Integer psId) {
+		this.psId = psId;
+	}
 
 	public DoctorRegAndPat() {
 		super();
@@ -124,8 +133,10 @@ public class DoctorRegAndPat {
 	public String toString() {
 		return "DoctorRegAndPat [pName=" + pName + ", pSex=" + pSex + ", pBirthday=" + pBirthday + ", pImg=" + pImg
 				+ ", rId=" + rId + ", rDate=" + rDate + ", rStatus=" + rStatus + ", rInfo=" + rInfo + ", rRemark="
-				+ rRemark + "]";
+				+ rRemark + ", psId=" + psId + "]";
 	}
+
+	
     
     
 }
