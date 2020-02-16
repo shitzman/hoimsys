@@ -30,11 +30,12 @@ public class MedicineController {
 	//返回所有药品信息
 	@GetMapping(value = "/showmedicines")
 	Msg showMdicineController(
+			@RequestParam(value = "search", defaultValue = "")String search,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
 		
 		PageHelper.startPage(pageNum, pageSize);
-		List<Medicine> medList = medService.getMedicineList();
+		List<Medicine> medList = medService.getMedicineList(search);
 		
 		PageInfo<Medicine> pagemedList = new PageInfo<Medicine>(medList);
 		return Msg.success().add("medList", pagemedList);

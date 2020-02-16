@@ -120,13 +120,19 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public Doctor saveDoctor(Doctor doctor) {
 		// TODO Auto-generated method stub
-		doctor.setdLimitsNumber(0);//初始化权限为0，等待超级管理员为其重新分配身份
+		//doctor.setdLimitsNumber(0);//初始化权限为0，等待超级管理员为其重新分配身份
 		
 		if(doctorMapper.insertSelective(doctor)>0) {
 			return doctorMapper.selectDoctorBydMobile(doctor.getdMobile());
 		}
 		
 		return null;
+	}
+
+	@Override
+	public List<DtDoctor> getRegDtdoctorList(String nameOrId) {
+		// TODO Auto-generated method stub
+		return doctorMapper.selectRegDtdoctorList(nameOrId);
 	}
 
 }

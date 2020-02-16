@@ -106,6 +106,14 @@
   	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id
   </select>
   
+  <select id="selectRegDtdoctorList" resultMap="DtDoctorResultMap">
+  	<bind name="pattern" value="'%' + nameOrId + '%'" />
+  	select 
+  	<include refid="DtDoctor_Column_List" />
+  	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id
+  	where d.d_limits_number &lt;0 and (d.d_name like #{pattern} or d.d_id like #{pattern})
+  </select>
+  
   
   <!-- MBG生成 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

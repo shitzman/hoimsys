@@ -16,9 +16,11 @@
   </sql>
   
   <select id="selectListMedicine" resultMap="BaseResultMap">
+  	<bind name="pattern" value="'%' + nameOrId + '%'" />
   	select 
     <include refid="Base_Column_List" />
     from medicine
+    where m_name like #{pattern} or m_id like #{pattern}
   </select>
   
   

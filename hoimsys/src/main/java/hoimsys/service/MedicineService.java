@@ -6,5 +6,5 @@ import hoimsys.po.Medicine;
 
 public interface MedicineService {
 
-	List<Medicine> getMedicineList();
+	List<Medicine> getMedicineList(String nameOrId);
 }

@@ -17,7 +17,7 @@ public interface MedicineMapper {
 
     int updateByPrimaryKey(Medicine record);
     
-    List<Medicine> selectListMedicine();
+    List<Medicine> selectListMedicine(String nameOrId);
     
     
 }

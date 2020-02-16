@@ -36,5 +36,8 @@ public interface DoctorService {
 	
 	//医生注册
 	Doctor saveDoctor(Doctor doctor);
+	
+	//查询注册医生列表
+	List<DtDoctor> getRegDtdoctorList(String nameOrId);
 
 }

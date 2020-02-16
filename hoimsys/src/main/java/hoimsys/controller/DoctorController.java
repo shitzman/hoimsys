@@ -50,6 +50,63 @@ public class DoctorController {
 	PrescriptionService preService;
 	
 	/*
+	 * 	医院方：
+	 * 	推荐医生操作，即，修改挂号单中的医生id字段
+	 * 	接受参数，挂号单id以及所推荐医生id
+	 * 
+	 */
+	@PostMapping("/recomdoctor")
+	Msg doctorRecom(Integer rId, Integer dId) {
+		
+		Registration reg = new Registration();
+		reg.setrId(rId);
+		reg.setdId(dId);	//在这应该查询出医生所属科室，连并科室id一块修改
+		
+		if(regService.changeRegByRegId(reg)>0) {
+			return Msg.success().resetMsg("推荐成功");
+		}
+		
+		return Msg.fail().resetMsg("推荐失败");
+	}
+	
+	/*
+	 * 	医院方：
+	 * 	超级管理员，批准医生申请
+	 * 	接受参数 医生id(dId)
+	 * 
+	 */
+	@PostMapping("/superadmin/ratifyregdoctor")
+	Msg superAdminRatifyRegDoc(Integer dId) {
+		if(dId!=null && dId>0) {
+			Doctor doctor = doctorService.getOneDoctorBydId(dId);
+			doctor.setdLimitsNumber(Math.abs(doctor.getdLimitsNumber()));//将权限编号设为正值；即为可用；
+			
+			if(doctorService.updateDoctorBydId(doctor)>0)
+				return Msg.success().add("doctor", doctor);
+		}
+		
+		return Msg.fail();
+	}
+	
+	
+	/*
+	 * 	医院方：
+	 * 	超级管理员查看所有医生申请记录
+	 */
+	@GetMapping("/superadmin/showregdoc")
+	Msg superAdminShowDtdocReg(
+			@RequestParam(value = "search", defaultValue = "") String search,
+			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
+		
+		PageHelper.startPage(pageNum, pageSize);
+		List<DtDoctor> regDtDoctor = doctorService.getRegDtdoctorList(search);
+		PageInfo<DtDoctor> pageRegDtDoctor = new PageInfo<DtDoctor>(regDtDoctor);
+		return Msg.success().add("pageRegDtDoctor", pageRegDtDoctor);
+	}
+	
+	
+	/*
 	 * 	医院方
 	 * 	药品管理员将挂号单状态改为5（取药完毕动作）
 	 * 	接受参数，挂号单id（regId)
@@ -67,14 +124,17 @@ public class DoctorController {
 	/*
 	 * 	医院方
 	 * 	药品管理员获取所有挂号单状态为3的挂号单列表（此时状态为待取药）
+	 * 	[将状态码修改为可变的，接受参数，默认为3，即待取药]
 	 */
 	@GetMapping("/medadmin/getreg")
 	Msg MedAdminShowReg(
+			@RequestParam(value = "rStatus", defaultValue = "3") Integer rStatus,
+			@RequestParam(value = "search", defaultValue = "") String search,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
 		
 		PageHelper.startPage(pageNum, pageSize);
-		List<DoctorRegAndPat> drp = regService.getAllDoctorRegAndPatBydIdAndrStatus(3);//3状态为挂号单已处理单为取药的状态
+		List<DoctorRegAndPat> drp = regService.getAllDoctorRegAndPatBydIdAndrStatus(rStatus,search);//3状态为挂号单已处理单为取药的状态
 		PageInfo<DoctorRegAndPat> pageDrpList = new PageInfo<DoctorRegAndPat>(drp);
 		
 		return Msg.success().add("pageDrpList", pageDrpList);
@@ -125,7 +185,8 @@ public class DoctorController {
 		}
 		
 		//存储所开药品
-		preService.savePrescriptionByMaps(psId, docUpReg.getPres());
+		if(docUpReg.getPres()!=null)	//修复不开药无法提交问题
+			preService.savePrescriptionByMaps(psId, docUpReg.getPres());
 		
 		
 		
@@ -145,11 +206,12 @@ public class DoctorController {
 	Msg showDoctorRegAndPats(
 			Integer dId,
 			Integer rStatus,
+			@RequestParam(value = "search", defaultValue = "") String search,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
 		
 		PageHelper.startPage(pageNum, pageSize);
-		List<DoctorRegAndPat> drp = regService.getDoctorRegAndPatBydIdAndrStatus(dId, rStatus);//1状态为待诊断状态
+		List<DoctorRegAndPat> drp = regService.getDoctorRegAndPatBydIdAndrStatus(dId, rStatus, search);//1状态为待诊断状态
 		PageInfo<DoctorRegAndPat> pageDrpList = new PageInfo<DoctorRegAndPat>(drp);
 		
 		return Msg.success().add("pageDrpList", pageDrpList);
@@ -158,7 +220,7 @@ public class DoctorController {
 	
 	/*
 	 * 	医院方注册接口：
-	 * 	所需参数：Doctor(dLimitsNumber会被初始化为0）
+	 * 	所需参数：Doctor(dLimitsNumber为期待职位编号）
 	 * 	注册填写申请信息，超级管理员分配身份后方可使用
 	 * 	不允许注册手机号重复
 	 */
@@ -168,7 +230,10 @@ public class DoctorController {
 		if(doctorService.getDoctorBydMobile(doctor.getdMobile())!=null) {
 			return Msg.fail().resetMsg("手机号已被注册").add("doctor", doctor);
 		}
-		
+		//将期待职位编号改为负值，管理员审核可用；
+		if(doctor.getdLimitsNumber()>0) {
+			doctor.setdLimitsNumber(-doctor.getdLimitsNumber());
+		}
 		Doctor newDoctor = doctorService.saveDoctor(doctor);
 		if(newDoctor != null) {
 			return Msg.success().add("newDoctor", newDoctor).resetMsg("注册成功");

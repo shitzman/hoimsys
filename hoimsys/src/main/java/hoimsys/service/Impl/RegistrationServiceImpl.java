@@ -88,14 +88,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return psId;
 	}
 	@Override
-	public List<DoctorRegAndPat> getDoctorRegAndPatBydIdAndrStatus(Integer dId, Integer rStatus) {
+	public List<DoctorRegAndPat> getDoctorRegAndPatBydIdAndrStatus(Integer dId, Integer rStatus, String pNameOrrId) {
 		// TODO Auto-generated method stub
-		return regMapper.selectDoctorRegAndPatBydIdAndrStatus(dId, rStatus);
+		return regMapper.selectDoctorRegAndPatBydIdAndrStatus(dId, rStatus, pNameOrrId);
 	}
 	@Override
-	public List<DoctorRegAndPat> getAllDoctorRegAndPatBydIdAndrStatus(Integer rStatus) {
+	public List<DoctorRegAndPat> getAllDoctorRegAndPatBydIdAndrStatus(Integer rStatus, String pNameOrrId) {
 		// TODO Auto-generated method stub
-		return regMapper.selectAllDoctorRegAndPatBydIdAndrStatus(rStatus);
+		return regMapper.selectAllDoctorRegAndPatBydIdAndrStatus(rStatus,pNameOrrId);
 	}
 	@Override
 	public int changerStatusByregId(Integer regId, Integer rStatus) {
@@ -103,6 +103,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 		Registration reg = new Registration();
 		reg.setrId(regId);
 		reg.setrStatus(rStatus);
+		return regMapper.updateByPrimaryKeySelective(reg);
+	}
+	@Override
+	public int changeRegByRegId(Registration reg) {
+		// TODO Auto-generated method stub
 		return regMapper.updateByPrimaryKeySelective(reg);
 	}
 

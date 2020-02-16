@@ -15,9 +15,9 @@ public class MedicineServiceImpl implements MedicineService {
 	MedicineMapper medMapper;
 	
 	@Override
-	public List<Medicine> getMedicineList() {
+	public List<Medicine> getMedicineList(String nameOrId) {
 		// TODO Auto-generated method stub
-		return medMapper.selectListMedicine();
+		return medMapper.selectListMedicine(nameOrId);
 	}
 
 }

@@ -41,4 +41,7 @@ public interface DoctorMapper {
     //根据医生的手机号获取医生信息
     Doctor selectDoctorBydMobile(String dMobile);
     
+    //查询注册医生列表
+  	List<DtDoctor> selectRegDtdoctorList(String nameOrId);
+    
 }

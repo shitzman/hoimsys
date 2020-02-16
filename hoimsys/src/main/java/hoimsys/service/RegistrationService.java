@@ -27,12 +27,15 @@ public interface RegistrationService {
   	Integer UpdageRegInfoAndRemark(Registration reg);
   	
   	//根据医生id以及挂号单状态查询该医生所处理的挂号单信息
-  	List<DoctorRegAndPat> getDoctorRegAndPatBydIdAndrStatus(Integer dId, Integer rStatus);
+  	List<DoctorRegAndPat> getDoctorRegAndPatBydIdAndrStatus(Integer dId, Integer rStatus, String pNameOrrId);
   	
   //根据挂号单状态查询所有的挂号单信息
-  	List<DoctorRegAndPat> getAllDoctorRegAndPatBydIdAndrStatus(Integer rStatus);
+  	List<DoctorRegAndPat> getAllDoctorRegAndPatBydIdAndrStatus(Integer rStatus, String pNameOrrId);
   	
   	//根据挂号单id（regId)修改挂号单状态(rStatus)
   	int changerStatusByregId(Integer regId, Integer rStatus);
+  	
+  	//根据挂号单id更新挂号单数据
+  	int changeRegByRegId(Registration reg);
 
 }
