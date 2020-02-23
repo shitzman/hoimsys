@@ -39,5 +39,11 @@ public interface DoctorService {
 	
 	//查询注册医生列表
 	List<DtDoctor> getRegDtdoctorList(String nameOrId);
+	
+	//查询现有医生列表
+	List<DtDoctor> getDtdoctorList(String nameOrId);
+	
+	//查询所有医生列表
+	List<DtDoctor> getAllDtdoctorList(String nameOrId);
 
 }

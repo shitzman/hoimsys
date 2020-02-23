@@ -135,4 +135,16 @@ public class DoctorServiceImpl implements DoctorService {
 		return doctorMapper.selectRegDtdoctorList(nameOrId);
 	}
 
+	@Override
+	public List<DtDoctor> getAllDtdoctorList(String nameOrId) {
+		// TODO Auto-generated method stub
+		return doctorMapper.selectAllDtdoctorList(nameOrId);
+	}
+
+	@Override
+	public List<DtDoctor> getDtdoctorList(String nameOrId) {
+		// TODO Auto-generated method stub
+		return doctorMapper.selectDtdoctorList(nameOrId);
+	}
+
 }

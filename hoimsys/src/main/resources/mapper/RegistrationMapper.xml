@@ -53,7 +53,7 @@
   	select 
   	<include refid="Base_Column_List" />
   	from registration
-  	where p_id = #{pId} and r_status BETWEEN 1 and 5
+  	where p_id = #{pId} and r_status BETWEEN 1 and 4
   	ORDER BY r_id desc
   </select>
   

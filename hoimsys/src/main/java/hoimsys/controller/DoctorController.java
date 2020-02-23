@@ -92,15 +92,38 @@ public class DoctorController {
 	/*
 	 * 	医院方：
 	 * 	超级管理员查看所有医生申请记录
+	 * 	改进：
+	 * 		可以根据 limit参数来制定搜索结果，
+	 * 		0----已注册未批准
+	 * 		1----正在正常使用的医生账号
+	 * 		2----所有医生（默认）
+	 * 		（所有查询均将超级管理员排除在外）
 	 */
 	@GetMapping("/superadmin/showregdoc")
 	Msg superAdminShowDtdocReg(
+			@RequestParam(value = "limit", defaultValue = "2") Integer limit,
 			@RequestParam(value = "search", defaultValue = "") String search,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
 		
-		PageHelper.startPage(pageNum, pageSize);
-		List<DtDoctor> regDtDoctor = doctorService.getRegDtdoctorList(search);
+		
+		List<DtDoctor> regDtDoctor = null;
+		switch (limit) {
+		case 0:					//注册申请列表
+			PageHelper.startPage(pageNum, pageSize);
+			regDtDoctor = doctorService.getRegDtdoctorList(search);
+			break;
+		case 1:					//现有医生
+			PageHelper.startPage(pageNum, pageSize);
+			regDtDoctor = doctorService.getDtdoctorList(search);
+			break;
+
+		default:				//所有医生
+			PageHelper.startPage(pageNum, pageSize);
+			regDtDoctor = doctorService.getAllDtdoctorList(search);
+			break;
+		}
+		
 		PageInfo<DtDoctor> pageRegDtDoctor = new PageInfo<DtDoctor>(regDtDoctor);
 		return Msg.success().add("pageRegDtDoctor", pageRegDtDoctor);
 	}
@@ -171,13 +194,21 @@ public class DoctorController {
 	 */
 	@PostMapping(value = "/updatereg", produces = "application/json;charset=UTF-8")
 	Msg DoctorUpdateReg(@RequestBody DoctorUpdateReg docUpReg) {
-		System.out.println(docUpReg);
+		//System.out.println(docUpReg);
 		
 		Registration reg = new Registration();
 		reg.setrId(docUpReg.getrId());
 		reg.setrInfo(docUpReg.getrInfo());
 		reg.setrRemark(docUpReg.getrRemarks());
-		reg.setrStatus(3); 	//修改挂号单状态为 3 （已诊断）
+		
+		/*
+		 * 	修复不开药还要取药导致挂号单无法结束的问题
+		 */
+		if(docUpReg.getPres() == null) {	//判断是否开药
+			reg.setrStatus(5);	//若未开药则跳过取药步骤，直接完成
+		}else {
+			reg.setrStatus(3); 	//修改挂号单状态为 3 （已诊断），即待取药状态
+		}
 		//若修改成功则返回此挂号单的药单编号，否则返回-1；
 		Integer psId = regService.UpdageRegInfoAndRemark(reg);
 		if(psId == -1) {

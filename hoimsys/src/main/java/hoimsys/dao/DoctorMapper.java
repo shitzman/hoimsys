@@ -43,5 +43,11 @@ public interface DoctorMapper {
     
     //查询注册医生列表
   	List<DtDoctor> selectRegDtdoctorList(String nameOrId);
+  	
+  //查询现有医生列表
+  	List<DtDoctor> selectDtdoctorList(String nameOrId);
+  	
+  //查询所有医生列表
+  	List<DtDoctor> selectAllDtdoctorList(String nameOrId);
     
 }

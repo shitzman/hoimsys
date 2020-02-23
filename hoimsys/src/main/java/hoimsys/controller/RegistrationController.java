@@ -44,6 +44,8 @@ public class RegistrationController {
 	 * 	在mapper层返回Registration对象；
 	 *	service层将其封装到RegistrationAndDtDoctor对象中，此对象封装了Registration对象和DtDoctor对象；
 	 * 	DtDoctor对象有封装了Doctor、Title、Department对象；
+	 * 	改进：
+	 * 		rStatus 为 0 或-1 （默认）是会查询状态码为 1-4，即进行中的挂号单
 	 */
 	@GetMapping("/getorders")
 	public Msg getAllRegistrationBypIdAndrStatus(
