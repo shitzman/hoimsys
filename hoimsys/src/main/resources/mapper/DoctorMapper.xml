@@ -128,7 +128,7 @@
   	select 
   	<include refid="DtDoctor_Column_List" />
   	from doctor d LEFT JOIN title t on d.t_id = t.t_id LEFT JOIN department dt on d.dt_id = dt.dt_id
-  	where d.d_limits_number &gt;0 and (d.d_name like #{pattern} or d.d_id like #{pattern})
+  	where (d.d_name like #{pattern} or d.d_id like #{pattern})
   			and d.d_limits_number != 99
   </select>
   
